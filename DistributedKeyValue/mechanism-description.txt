@@ -1,0 +1,11 @@
+
+In this project, we decided to keep a vector clock for each key with in the kvs. 
+we did this, since we are comfortable with the structure and behaviors of vector clocks.
+we also keep a clock for each variable, in order to track conflicting requests vs non conflicting requests.
+We deemed it unnececary to make a system for tracking if a node goes down or not. We found that we didn't 
+really need to know if a certain node went down. When that node goes back up we'll eventually catch it back up
+using our gossip system that we use to sync all the nodes up every three seconds. With this system, and the client holding causal metadata,
+we don't need to think about causal consistency breaking due to nodes going down. We also don't have to worry about the replication protocol,
+we used a form of quorum replication, since the client will let us know if we're behind and need more information. In summary, 
+we track causal consistency using vector clocks for each key, and we did not implement a system for checking if nodes go down, since we do not 
+really care if a node goes down.
